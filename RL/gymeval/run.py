@@ -6,14 +6,16 @@ Created on Jun 26, 2016
 
 import argparse
 import matplotlib.pyplot as plt
-import  time
+import time
 
 import numpy as np
 import gym
+from gym import wrappers
 import agents
 
 
 if __name__ == '__main__':
+    import sys
     parser = argparse.ArgumentParser()
     parser.add_argument('--target', nargs="?", default="LunarLander-v2")
     parser.add_argument('--seed', nargs="?", default=None)
@@ -36,10 +38,11 @@ if __name__ == '__main__':
         env.seed(seed)
         np.random.seed(seed)
 
-    resultsdir = './' + nameenv
+    resultsdir = './%s-%d' % (nameenv, int(time.time()))
 
-    env.monitor.start(resultsdir, force=True)
-    print env.observation_space, env.action_space, env.spec.timestep_limit, env.reward_range, gym.envs.registry.spec(nameenv).trials
+    env = gym.wrappers.Monitor(env, resultsdir)
+    print env.observation_space, env.action_space, env.spec.tags.get('wrapper_config.TimeLimit.max_episode_steps'), env.reward_range, gym.envs.registry.spec(nameenv).trials
+
     if nameenv == 'Acrobot-v0':
         env.reward_range = (-1., 0.)
 
@@ -80,7 +83,7 @@ if __name__ == '__main__':
             "file": None,
             "seed": seed}
     agent = agents.deepQAgent(env.observation_space, env.action_space, env.reward_range, **params)
-    num_steps = env.spec.timestep_limit
+    num_steps = env.spec.tags.get('wrapper_config.TimeLimit.max_episode_steps')
     avg = 0.
     oldavg = 0.
 

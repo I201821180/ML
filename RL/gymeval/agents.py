@@ -788,7 +788,7 @@ class deepQAgentCont(object):
 
 def do_rollout(agent, env, episode, num_steps=None, render=False):
     if num_steps == None:
-        num_steps = env.spec.timestep_limit
+        num_steps = env.spec.tags.get('wrapper_config.TimeLimit.max_episode_steps')
     total_rew = 0.
     cost = 0.
 
