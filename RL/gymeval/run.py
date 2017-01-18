@@ -15,7 +15,6 @@ import agents
 
 
 if __name__ == '__main__':
-    import sys
     parser = argparse.ArgumentParser()
     parser.add_argument('--target', nargs="?", default="LunarLander-v2")
     parser.add_argument('--seed', nargs="?", default=None)
