@@ -12,6 +12,7 @@ tensorflow
 numpy
 gym
 ```  
+Follow instructions here for successful install of gym and Box2D: https://github.com/openai/gym/issues/100#issuecomment-260095406
 
 ###How to run
 download the code from https://github.com/davidenitti/ML/tree/master/RL/gymeval
